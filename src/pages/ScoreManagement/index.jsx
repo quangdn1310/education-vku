@@ -1,76 +1,11 @@
-import { Button, Space, Table } from "antd";
-import React, { useState } from "react";
+import { Button, Card, Space, Table } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const columns = [
-  {
-    title: "STT",
-    dataIndex: "order",
-    align: "center",
-  },
-  {
-    title: "Tên lớp tín chỉ",
-    dataIndex: "creditsName",
-    align: "center",
-  },
-  {
-    title: "Giảng viên",
-    dataIndex: "instructor",
-    align: "center",
-  },
-  {
-    title: "Tuần",
-    dataIndex: "week",
-    align: "center",
-  },
-  {
-    title: "Phòng",
-    dataIndex: "room",
-    align: "center",
-  },
-  {
-    title: "Thứ",
-    dataIndex: "day",
-    align: "center",
-  },
-  {
-    title: "Tiết",
-    dataIndex: "lesson",
-    align: "center",
-  },
-
-  {
-    title: "Quản lý",
-    dataIndex: "management",
-    width: 120,
-    align: "center",
-    render: (_, i) => (
-      <Space>
-        <Button type="text" className="btn">
-          Gửi email
-        </Button>
-        <Link to={`/score_management/entry_point`}>
-          <Button type="text" className="btn">
-            Nhập điểm
-          </Button>
-        </Link>
-      </Space>
-    ),
-  },
-];
-
-const data = Array.from({ length: 20 }).map((_, index) => ({
-  key: index,
-  order: index + 1,
-  creditsName: "Chuyên đề 4 " + index,
-  instructor: "Nguyễn Văn A",
-  week: "45",
-  room: "A. 405",
-  day: "Tư",
-  lesson: "6-8",
-}));
-
 function ScoreManagement() {
+  // const [data, setData] = useState();
+
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const onSelectChange = (newSelectedRowKeys) => {
@@ -82,18 +17,112 @@ function ScoreManagement() {
     onChange: onSelectChange,
   };
 
+  const columns = [
+    {
+      title: "STT",
+      dataIndex: "order",
+      align: "center",
+      width: 70,
+    },
+    {
+      title: "Tên lớp tín chỉ",
+      dataIndex: "ma_mh",
+      align: "center",
+    },
+
+    {
+      title: "Tuần",
+      dataIndex: "tuan",
+      align: "center",
+      width: 120,
+    },
+    {
+      title: "Phòng",
+      dataIndex: "phong_hoc",
+      align: "center",
+      width: 120,
+    },
+    {
+      title: "Thứ",
+      dataIndex: "thu",
+      align: "center",
+      width: 120,
+    },
+    {
+      title: "Tiết",
+      dataIndex: "tiet_hoc",
+      align: "center",
+      width: 120,
+    },
+
+    {
+      title: "Quản lý",
+      dataIndex: "management",
+      width: 120,
+      fixed: "right",
+      align: "center",
+      render: (_, i) => (
+        <Space>
+          <Button type="text" className="btn">
+            Gửi email
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  // useEffect(() => {
+  //   axios
+  //     .post(`http://localhost/ApiVKU/tkb.php`, {
+  //       ma_gv: "19IT155",
+  //       "Access-Control-Allow-Origin": "*",
+  //       "Access-Control-Allow-Headers": "POST",
+  //     })
+  //     .then((data) => console.log(data))
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+  const data = Array.from({ length: 20 }).map((_, index) => ({
+    key: index,
+    order: index + 1,
+    ma_mh: "Chuyên đề 4 " + index,
+    tuan: "45",
+    phong_hoc: "A. 405",
+    thu: "Tư",
+    tiet_hoc: "6-8",
+  }));
+
   return (
     <div className="page-content">
-      <Table
-        rowSelection={rowSelection}
-        columns={columns}
-        dataSource={data}
-        pagination={{
-          defaultPageSize: 50,
-          showSizeChanger: true,
-          pageSizeOptions: [50, 100, 150],
-        }}
-      />
+      <Card title="Quản lý điểm sinh viên">
+        <Space direction="vertical" style={{ width: "100%" }}>
+          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Link
+              to={`/score_management/entry_point`}
+              state={{ selectedRowKeys }}
+            >
+              <Button type="primary" className="btn">
+                Nhập điểm
+              </Button>
+            </Link>
+          </div>
+          <Table
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              defaultPageSize: 50,
+              showSizeChanger: true,
+              pageSizeOptions: [50, 100, 150],
+            }}
+            scroll={{
+              x: 1000,
+            }}
+          />
+        </Space>
+      </Card>
     </div>
   );
 }

@@ -6,7 +6,7 @@ export const MENU_ITEMS = [
   {
     key: "1",
     icon: React.createElement(UploadOutlined),
-    label: <Link to="/">Thông tin sinh viên</Link>,
+    label: <Link to="/">Thông tin giảng viên</Link>,
   },
   {
     key: "2",
