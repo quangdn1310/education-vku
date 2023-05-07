@@ -1,22 +1,22 @@
 import { Button, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import vkuApi from "../../components/Api/vkuApi";
 import { useCookies } from "react-cookie";
+import vkuApi from "../../../components/Api/vkuApi";
 import Title from "antd/es/typography/Title";
 
-function ScoreManagement() {
+function Schedule() {
   const [cookies] = useCookies();
-  const { ma_gv } = cookies;
+  const { ma_sv } = cookies;
 
   const [data, setData] = useState();
 
   useEffect(() => {
     const getTkb = async () => {
       const params = {
-        ma_gv,
+        ma_sv,
       };
-      let response = await vkuApi.getTkb({ params });
+      let response = await vkuApi.getTkbSinhVien({ params });
 
       if (response) {
         setData(response);
@@ -24,7 +24,7 @@ function ScoreManagement() {
     };
 
     getTkb();
-  }, [ma_gv]);
+  }, [ma_sv]);
 
   const columns = [
     {
@@ -35,7 +35,7 @@ function ScoreManagement() {
       render: (_, record, i) => i + 1,
     },
     {
-      title: "Tên lớp tín chỉ",
+      title: "Môn học",
       dataIndex: "ma_mh",
       render: (_, record) => `${record?.ma_mh} (${record?.nhom})`,
     },
@@ -73,14 +73,14 @@ function ScoreManagement() {
     {
       title: "Quản lý",
       dataIndex: "management",
-      width: 160,
+      width: 200,
       fixed: "right",
       align: "center",
       render: (_, record) => (
         <Space>
-          <Link to={`nhap-diem/${record.ma_lop_tc}/${record.nhom}`}>
-            <Button type="text" className="btn">
-              Nhập điểm
+          <Link to={``}>
+            <Button type="primary" className="btn">
+              Xem lịch trình
             </Button>
           </Link>
         </Space>
@@ -99,7 +99,7 @@ function ScoreManagement() {
   return (
     <div className="page-content">
       <Title level={4} style={useStyles.titleStyles}>
-        Quản lý điểm sinh viên
+        Thời khóa biểu
       </Title>
       <Table
         columns={columns}
@@ -117,4 +117,4 @@ function ScoreManagement() {
   );
 }
 
-export default ScoreManagement;
+export default Schedule;

@@ -2,16 +2,22 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "antd/dist/reset.css";
 import "./App.css";
-import { routes } from "./routes";
+import { routes, studentRoutes } from "./routes";
 import MainLayout from "./components/Layout";
 import { Fragment } from "react";
+import { useCookies } from "react-cookie";
 
 function App() {
+  const [cookies] = useCookies();
+  const { ma_gv } = cookies;
+
+  const routesType = ma_gv ? routes : studentRoutes;
+
   return (
     <Router>
       <div className="App">
         <Routes>
-          {routes.map((route, i) => {
+          {routesType.map((route, i) => {
             let Layout = MainLayout;
             if (route.layout) {
               Layout = route.layout;

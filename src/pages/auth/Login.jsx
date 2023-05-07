@@ -1,10 +1,58 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, Space, Typography } from "antd";
-import React from "react";
+import React, { useState } from "react";
+import {
+  CloseCircleOutlined,
+  LockOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  Space,
+  Typography,
+  notification,
+} from "antd";
+import vkuApi from "../../components/Api/vkuApi";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { notificationLoginFailed } from "../../commom";
 
 const { Title } = Typography;
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onFinish = async (values) => {
+    const { email, password } = values;
+    const params = {
+      email,
+      password,
+    };
+    try {
+      setIsLoading(true);
+      let res = await vkuApi.login({ params });
+
+      if (res.data === "null") {
+        notification.error(notificationLoginFailed);
+      } else {
+        if (res.ma_gv) {
+          setCookie("ma_gv", res.ma_gv, { path: "/" });
+        } else {
+          setCookie("ma_sv", res.ma_sv, { path: "/" });
+        }
+        navigate("/");
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
+  };
+
   const useStyles = {
     titleStyles: {
       textAlign: "center",
@@ -36,9 +84,9 @@ const Login = () => {
           <Title level={5} style={useStyles.titleStyles}>
             Nhân bản - Phụng sự - Khai phóng
           </Title>
-          <Form autoComplete="off">
+          <Form autoComplete="off" onFinish={onFinish}>
             <Form.Item
-              name="username"
+              name="email"
               rules={[
                 {
                   required: true,
@@ -66,7 +114,12 @@ const Login = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="btn w-full">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="btn w-full"
+                loading={isLoading}
+              >
                 Đăng nhập
               </Button>
             </Form.Item>

@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Layout, Menu, Space } from "antd";
-import UserInfo from "../../UserInfo";
-import { MENU_ITEMS } from "../../../utils/constants";
+import UserInfo from "./UserInfo";
+import { MENU_ITEMS, STUDENT_MENU_ITEMS } from "../../../utils/constants";
+import vkuApi from "../../Api/vkuApi";
+import { useCookies } from "react-cookie";
 const { Sider } = Layout;
 
 const Sidebar = ({ collapsed }) => {
+  const [cookies] = useCookies();
+  const { ma_gv, ma_sv } = cookies;
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const getUser = async () => {
+      if (ma_gv) {
+        const params = {
+          ma_gv,
+        };
+
+        const res = await vkuApi.getTeacher({ params });
+        if (res) {
+          setUser(res);
+        }
+      } else if (ma_sv) {
+        const params = {
+          ma_sv,
+        };
+
+        const res = await vkuApi.getStudent({ params });
+        if (res) {
+          setUser(res);
+        }
+      }
+    };
+
+    getUser();
+  }, [ma_gv, ma_sv]);
+
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
       <Space direction="vertical" size={"large"} style={{ width: "100%" }}>
@@ -22,13 +55,13 @@ const Sidebar = ({ collapsed }) => {
           />
         </div>
 
-        <UserInfo />
+        <UserInfo isShow={!collapsed} userInfo={user} />
 
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={MENU_ITEMS}
+          items={ma_gv ? MENU_ITEMS : STUDENT_MENU_ITEMS}
         />
       </Space>
     </Sider>

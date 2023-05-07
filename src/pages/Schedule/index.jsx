@@ -1,11 +1,11 @@
-import { Button, Space, Table } from "antd";
+import { Button, Card, Space, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import vkuApi from "../../components/Api/vkuApi";
 import { useCookies } from "react-cookie";
 import Title from "antd/es/typography/Title";
 
-function ScoreManagement() {
+function Schedule() {
   const [cookies] = useCookies();
   const { ma_gv } = cookies;
 
@@ -78,9 +78,11 @@ function ScoreManagement() {
       align: "center",
       render: (_, record) => (
         <Space>
-          <Link to={`nhap-diem/${record.ma_lop_tc}/${record.nhom}`}>
-            <Button type="text" className="btn">
-              Nhập điểm
+          <Link
+            to={`/thoi-khoa-bieu/student-attendance/${record?.ma_lop_tc}/${record?.nhom}`}
+          >
+            <Button type="primary" className="btn">
+              Điểm danh
             </Button>
           </Link>
         </Space>
@@ -99,7 +101,7 @@ function ScoreManagement() {
   return (
     <div className="page-content">
       <Title level={4} style={useStyles.titleStyles}>
-        Quản lý điểm sinh viên
+        Thời khóa biểu
       </Title>
       <Table
         columns={columns}
@@ -117,4 +119,4 @@ function ScoreManagement() {
   );
 }
 
-export default ScoreManagement;
+export default Schedule;

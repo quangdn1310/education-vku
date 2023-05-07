@@ -1,7 +1,7 @@
 import { Button, Form, Input, Space } from "antd";
 import React, { useEffect, useState } from "react";
 
-const UserInfo = ({ user }) => {
+const Info = ({ user }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [form] = Form.useForm();
 
@@ -32,24 +32,18 @@ const UserInfo = ({ user }) => {
       >
         <Space direction="vertical" className="w-full" size={"middle"}>
           <Space className="w-full" size={"large"} wrap>
-            <Form.Item label="Mã giảng viên" name="ma_gv">
+            <Form.Item label="Mã sinh viên" name="ma_sv">
               <Input />
             </Form.Item>
             <Form.Item label="Họ tên" name="ho_ten">
               <Input />
             </Form.Item>
-            <Form.Item label="Học vị" name="hoc_vi">
+            <Form.Item label="Lớp" name="ma_lop">
               <Input />
             </Form.Item>
           </Space>
           <Space className="w-full" size={"large"} wrap>
-            <Form.Item label="Email" name="email">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Số điện thoại" name="sdt">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Khoa" name="ten_khoa">
+            <Form.Item label="Địa chỉ" name="dia_chi">
               <Input />
             </Form.Item>
           </Space>
@@ -81,4 +75,4 @@ const UserInfo = ({ user }) => {
   );
 };
 
-export default UserInfo;
+export default Info;

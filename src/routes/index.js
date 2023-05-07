@@ -1,25 +1,69 @@
 import ScoreManagement from "../pages/ScoreManagement";
-import Dashboard from "../pages/Dashboard";
-import Login from "../components/auth/Login";
+import Login from "../pages/auth/Login";
 import EntryPoint from "../pages/EntryPoint";
+import TeacherInfo from "../pages/TeacherInfo";
+import ProjectGuide from "../pages/ProjectGuide";
+import Schedule from "../pages/Schedule";
+import ScheduleStudent from "../pages/Student/Schedule";
+import StudentInfo from "../pages/Student/StudentInfo";
+import Score from "../pages/Student/Score";
+import StudentAttendance from "../pages/StudentAttendance";
 
 export const routes = [
   {
-    path: "/",
-    exact: true,
-    component: Dashboard,
+    path: "/quan-ly-diem/nhap-diem/:id/:group",
+    component: EntryPoint,
   },
+
   {
-    path: "/login",
+    path: "/dang-nhap",
     component: Login,
     layout: null,
   },
   {
-    path: "/score_management",
+    path: "/thoi-khoa-bieu/student-attendance/:id/:group",
+    component: StudentAttendance,
+  },
+  {
+    path: "/thoi-khoa-bieu",
+    component: Schedule,
+  },
+  {
+    path: "/quan-ly-diem",
     component: ScoreManagement,
   },
   {
-    path: "/score_management/entry_point",
-    component: EntryPoint,
+    path: "/huong-dan-do-an",
+    component: ProjectGuide,
+  },
+  {
+    path: "/",
+    exact: true,
+    component: TeacherInfo,
+  },
+];
+
+export const studentRoutes = [
+  {
+    path: "/dang-nhap",
+    component: Login,
+    layout: null,
+  },
+  {
+    path: "/thoi-khoa-bieu",
+    component: ScheduleStudent,
+  },
+  {
+    path: "/do-an",
+    component: ProjectGuide,
+  },
+  {
+    path: "/ket-qua-hoc-tap",
+    component: Score,
+  },
+  {
+    path: "/",
+    exact: true,
+    component: StudentInfo,
   },
 ];

@@ -1,26 +1,20 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Layout, Menu, Space, theme } from "antd";
+import { Layout, theme } from "antd";
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
-import { MENU_ITEMS } from "../../utils/constants";
 import { Footer } from "antd/es/layout/layout";
+import MenuRight from "./Header/MenuRight";
+
 const { Header, Content } = Layout;
 const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
     <Layout>
-      <Sidebar collapsed={collapsed}>
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={MENU_ITEMS}
-        />
-      </Sidebar>
+      <Sidebar collapsed={collapsed} />
       <Layout className="site-layout">
         <Header
           style={{
@@ -38,11 +32,7 @@ const MainLayout = ({ children }) => {
               }
             )}
 
-            <Space>
-              <Button type="text" className="btn">
-                Hi, Dang Quang!
-              </Button>
-            </Space>
+            <MenuRight />
           </div>
         </Header>
         <Content
