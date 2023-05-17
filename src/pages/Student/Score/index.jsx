@@ -8,14 +8,14 @@ import Title from "antd/es/typography/Title";
 
 const Score = () => {
   const [cookies] = useCookies();
-  const { ma_sv } = cookies;
+  const { profile } = cookies;
 
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const getScore = async () => {
       const params = {
-        ma_sv,
+        ma_sv: profile?.ma_sv,
       };
       let response = await vkuApi.getScore({ params });
 
@@ -25,7 +25,7 @@ const Score = () => {
     };
 
     getScore();
-  }, [ma_sv]);
+  }, [profile]);
 
   const useStyles = {
     titleStyles: {

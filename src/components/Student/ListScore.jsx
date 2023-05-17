@@ -79,7 +79,7 @@ const ListScore = (props) => {
     {
       title: "Tên môn học",
       dataIndex: "ma_mh",
-      render: (_, record) => `${record?.ma_mh} (${record?.nhom})`,
+      render: (_, record) => `${record?.ten_mh} (${record?.nhom})`,
     },
     {
       title: "Số tín chỉ",

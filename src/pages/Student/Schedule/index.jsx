@@ -7,14 +7,14 @@ import Title from "antd/es/typography/Title";
 
 function Schedule() {
   const [cookies] = useCookies();
-  const { ma_sv } = cookies;
+  const { profile } = cookies;
 
   const [data, setData] = useState();
 
   useEffect(() => {
     const getTkb = async () => {
       const params = {
-        ma_sv,
+        ma_sv: profile?.ma_sv,
       };
       let response = await vkuApi.getTkbSinhVien({ params });
 
@@ -24,7 +24,7 @@ function Schedule() {
     };
 
     getTkb();
-  }, [ma_sv]);
+  }, [profile]);
 
   const columns = [
     {
@@ -37,7 +37,7 @@ function Schedule() {
     {
       title: "Môn học",
       dataIndex: "ma_mh",
-      render: (_, record) => `${record?.ma_mh} (${record?.nhom})`,
+      render: (_, record) => `${record?.ten_mh} (${record?.nhom})`,
     },
     {
       title: "Số tín chỉ",

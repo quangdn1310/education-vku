@@ -7,14 +7,14 @@ import Title from "antd/es/typography/Title";
 
 function ScoreManagement() {
   const [cookies] = useCookies();
-  const { ma_gv } = cookies;
+  const { profile } = cookies;
 
   const [data, setData] = useState();
 
   useEffect(() => {
     const getTkb = async () => {
       const params = {
-        ma_gv,
+        ma_gv: profile?.ma_gv,
       };
       let response = await vkuApi.getTkb({ params });
 
@@ -24,7 +24,7 @@ function ScoreManagement() {
     };
 
     getTkb();
-  }, [ma_gv]);
+  }, [profile]);
 
   const columns = [
     {
@@ -36,8 +36,8 @@ function ScoreManagement() {
     },
     {
       title: "Tên lớp tín chỉ",
-      dataIndex: "ma_mh",
-      render: (_, record) => `${record?.ma_mh} (${record?.nhom})`,
+      // dataIndex: "ma_mh",
+      render: (_, record) => `${record?.ten_mh} (${record?.nhom})`,
     },
     {
       title: "Số tín chỉ",

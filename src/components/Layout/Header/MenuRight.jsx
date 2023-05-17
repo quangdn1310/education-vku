@@ -1,6 +1,5 @@
 import { Button, Divider, Dropdown, Space, Typography } from "antd";
-import React, { useEffect, useState } from "react";
-import vkuApi from "../../Api/vkuApi";
+import React from "react";
 import {
   DownOutlined,
   LogoutOutlined,
@@ -14,34 +13,15 @@ const { Text } = Typography;
 
 const MenuRight = () => {
   const [cookies, removeCookie] = useCookies();
-  const { ma_gv, ma_sv } = cookies;
-  const [user, setUser] = useState();
+  const { profile } = cookies;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const getUser = async () => {
-      let res = null;
-      if (ma_gv) {
-        res = await vkuApi.getTeacher({ params: { ma_gv } });
-      } else if (ma_sv) {
-        res = await vkuApi.getStudent({ params: { ma_sv } });
-      }
-      setUser(res);
-    };
-
-    getUser();
-  }, [ma_gv, ma_sv]);
 
   const onClick = ({ key }) => {
     switch (key) {
       case "1":
         break;
       case "2":
-        if (ma_gv) {
-          removeCookie("ma_gv", { path: "/" });
-        } else {
-          removeCookie("ma_sv", { path: "/" });
-        }
+        removeCookie("profile", { path: "/" });
         navigate("/dang-nhap");
         break;
 
@@ -83,8 +63,8 @@ const MenuRight = () => {
           >
             <img src={DirectHit} alt="" width={60} />
             <Space direction="vertical">
-              <Text strong>Khoa: {user?.ten_khoa}</Text>
-              <Text strong>Học vị: {user?.hoc_vi}</Text>
+              <Text strong>Khoa: {profile?.ten_khoa}</Text>
+              <Text strong>Học vị: {profile?.hoc_vi}</Text>
             </Space>
           </Space>
           <Divider
@@ -98,7 +78,7 @@ const MenuRight = () => {
     >
       <Space>
         <Button type="text" className="btn">
-          {user?.ho_ten}
+          {profile?.ho_ten}
           <DownOutlined />
         </Button>
       </Space>

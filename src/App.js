@@ -9,9 +9,9 @@ import { useCookies } from "react-cookie";
 
 function App() {
   const [cookies] = useCookies();
-  const { ma_gv } = cookies;
+  const { profile } = cookies;
 
-  const routesType = ma_gv ? routes : studentRoutes;
+  const routesType = profile?.ma_gv ? routes : studentRoutes;
 
   return (
     <Router>
