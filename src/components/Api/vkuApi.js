@@ -5,8 +5,16 @@ const vkuApi = {
     const path = `tkb.php`;
     return axiosClient.get(path, params);
   },
+  getTkbDoAn: (params) => {
+    const path = `tkbDoAn.php`;
+    return axiosClient.get(path, params);
+  },
   getTkbSinhVien: (params) => {
     const path = `tkbsv.php`;
+    return axiosClient.get(path, params);
+  },
+  getTkbDoAnSv: (params) => {
+    const path = `tkbDoAnSv.php`;
     return axiosClient.get(path, params);
   },
   login: (params) => {

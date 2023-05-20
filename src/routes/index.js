@@ -8,6 +8,7 @@ import ScheduleStudent from "../pages/Student/Schedule";
 import StudentInfo from "../pages/Student/StudentInfo";
 import Score from "../pages/Student/Score";
 import StudentAttendance from "../pages/StudentAttendance";
+import ProjectClass from "../pages/Student/ProjectClass";
 
 export const routes = [
   {
@@ -55,7 +56,7 @@ export const studentRoutes = [
   },
   {
     path: "/do-an",
-    component: ProjectGuide,
+    component: ProjectClass,
   },
   {
     path: "/ket-qua-hoc-tap",

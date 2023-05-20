@@ -10,7 +10,7 @@ const StudentInfo = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const getTeacher = async () => {
+    const getStudent = async () => {
       const params = {
         ma_sv: profile?.ma_sv,
       };
@@ -20,7 +20,7 @@ const StudentInfo = () => {
       }
     };
 
-    getTeacher();
+    getStudent();
   }, [profile]);
 
   return (
