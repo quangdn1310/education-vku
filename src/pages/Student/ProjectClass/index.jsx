@@ -87,7 +87,7 @@ const ProjectClass = () => {
   ];
   return (
     <div className="page-content">
-      <Card title={`Danh sách hướng dẫn lớp đồ án của`}>
+      <Card title={`Danh sách lớp đồ án/ đề án`}>
         <Table columns={columns} dataSource={data} scroll={{ x: 1200 }} />
       </Card>
     </div>

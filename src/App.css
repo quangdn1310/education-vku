@@ -13,7 +13,7 @@ body {
 }
 
 /* Override CSS antd components */
-.ant-layout-sider {
+/* .ant-layout-sider {
   width: 240px !important;
   flex: 0 0 240px !important;
   max-width: 240px !important;
@@ -23,7 +23,7 @@ body {
   width: 80px !important;
   flex: 0 0 80px !important;
   max-width: 80px !important;
-}
+} */
 
 .ant-table-container table > thead > tr:first-child > *:first-child,
 .ant-table-container table > thead > tr:first-child > *:last-child {

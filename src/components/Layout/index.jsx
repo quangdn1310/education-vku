@@ -24,14 +24,7 @@ const MainLayout = ({ children }) => {
           }}
         >
           <div className="flex-bw">
-            {React.createElement(
-              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className: "trigger",
-                onClick: () => setCollapsed(!collapsed),
-              }
-            )}
-
+            <span></span>
             <MenuRight />
           </div>
         </Header>

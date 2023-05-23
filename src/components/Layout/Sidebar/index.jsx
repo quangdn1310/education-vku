@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Layout, Menu, Space } from "antd";
 import UserInfo from "./UserInfo";
 import { MENU_ITEMS, STUDENT_MENU_ITEMS } from "../../../utils/constants";
 import { useCookies } from "react-cookie";
+import { useLocation } from "react-router-dom";
 const { Sider } = Layout;
 
 const Sidebar = ({ collapsed }) => {
   const [cookies] = useCookies();
+  let location = useLocation();
+
+  const [current, setCurrent] = useState(location.pathname);
+
+  useEffect(() => {
+    if (location) {
+      if (current !== location.pathname) {
+        setCurrent(location.pathname);
+      }
+    }
+  }, [location, current]);
+
+  const handleClick = (e) => {
+    setCurrent(e.key);
+  };
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Sider
+      // trigger={null}
+      // collapsible
+      // collapsed={collapsed}
+      breakpoint="lg"
+      collapsedWidth="0"
+    >
       <Space direction="vertical" size={"large"} style={{ width: "100%" }}>
         <div
           style={{
@@ -28,9 +50,10 @@ const Sidebar = ({ collapsed }) => {
         <UserInfo isShow={!collapsed} userInfo={cookies?.profile} />
 
         <Menu
+          onClick={handleClick}
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          selectedKeys={[current]}
           items={cookies?.profile?.ma_gv ? MENU_ITEMS : STUDENT_MENU_ITEMS}
         />
       </Space>

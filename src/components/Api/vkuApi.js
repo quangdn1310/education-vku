@@ -41,6 +41,10 @@ const vkuApi = {
     const path = `getScore.php`;
     return axiosClient.get(path, params);
   },
+  getSchoolYears: (params) => {
+    const path = `getAllSchoolYearByCourseId.php`;
+    return axiosClient.get(path, params);
+  },
 };
 
 export default vkuApi;

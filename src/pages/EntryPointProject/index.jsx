@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import vkuApi from "../../components/Api/vkuApi";
-import ListStudent from "../../components/ListStudent";
 import { Button, Space, notification } from "antd";
-import _ from "lodash";
 import Title from "antd/es/typography/Title";
+import ListStudentProject from "../../components/ListStudentProject";
 
-function Entrypoint() {
+function EntrypointProject() {
   const { id, group } = useParams();
   const [students, setStudents] = useState([]);
   const [newStudents, setNewStudents] = useState([]);
@@ -75,7 +74,10 @@ function Entrypoint() {
         <Title level={4} style={useStyles.titleStyles}>
           Nhập điểm
         </Title>
-        <ListStudent originData={students} onUpdate={updateStudentList} />
+        <ListStudentProject
+          originData={students}
+          onUpdate={updateStudentList}
+        />
 
         <Space direction="vertical" className="w-full" align="end">
           <Button
@@ -91,4 +93,4 @@ function Entrypoint() {
   );
 }
 
-export default Entrypoint;
+export default EntrypointProject;

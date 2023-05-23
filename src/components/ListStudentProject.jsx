@@ -38,7 +38,7 @@ const EditableCell = ({
     </td>
   );
 };
-const ListStudent = (props) => {
+const ListStudentProject = (props) => {
   const { originData, onUpdate } = props;
 
   const [form] = Form.useForm();
@@ -89,12 +89,11 @@ const ListStudent = (props) => {
       }
 
       const dataUpdate = newData.map((item) => {
-        const { ma_sv, ma_lop_tc, diem_cc, diem_gk, diem_ck, nhom } = item;
+        const { ma_sv, ma_lop_tc, nhom, diem_cc, diem_ck } = item;
         return {
           ma_sv,
           ma_lop_tc,
           diem_cc,
-          diem_gk,
           diem_ck,
           nhom,
         };
@@ -131,15 +130,9 @@ const ListStudent = (props) => {
       align: "center",
       editable: true,
     },
+
     {
-      title: "Điểm GK",
-      dataIndex: "diem_gk",
-      width: 120,
-      align: "center",
-      editable: true,
-    },
-    {
-      title: "Điểm CK",
+      title: "Điểm BV",
       dataIndex: "diem_ck",
       width: 120,
       align: "center",
@@ -150,20 +143,14 @@ const ListStudent = (props) => {
       width: 120,
       align: "center",
       render: (_, record) =>
-        scoreToAlp(
-          record?.diem_cc * 0.2 + record?.diem_gk * 0.2 + record?.diem_ck * 0.6
-        ),
+        scoreToAlp(record?.diem_cc * 0.2 + record?.diem_ck * 0.8),
     },
     {
       title: "Điểm số",
       width: 120,
       align: "center",
       render: (_, record) =>
-        (
-          record?.diem_cc * 0.2 +
-          record?.diem_gk * 0.2 +
-          record?.diem_ck * 0.6
-        ).toFixed(1),
+        (record?.diem_cc * 0.2 + record?.diem_ck * 0.8).toFixed(1),
     },
     {
       title: "Quản lý",
@@ -236,4 +223,4 @@ const ListStudent = (props) => {
     </Form>
   );
 };
-export default ListStudent;
+export default ListStudentProject;

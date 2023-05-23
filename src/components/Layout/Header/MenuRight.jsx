@@ -62,10 +62,18 @@ const MenuRight = () => {
             }}
           >
             <img src={DirectHit} alt="" width={60} />
-            <Space direction="vertical">
-              <Text strong>Khoa: {profile?.ten_khoa}</Text>
-              <Text strong>Học vị: {profile?.hoc_vi}</Text>
-            </Space>
+            {profile?.ma_gv && (
+              <Space direction="vertical">
+                <Text strong>Khoa: {profile?.ten_khoa}</Text>
+                <Text strong>Học vị: {profile?.hoc_vi}</Text>
+              </Space>
+            )}
+            {profile?.ma_sv && (
+              <Space direction="vertical">
+                <Text strong>Mã sinh viên: {profile?.ma_sv}</Text>
+                <Text strong>Lớp: {profile?.ten_lop}</Text>
+              </Space>
+            )}
           </Space>
           <Divider
             style={{

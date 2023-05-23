@@ -39,7 +39,7 @@ const Score = () => {
       <Title level={4} style={useStyles.titleStyles}>
         Kết quả học tập
       </Title>
-      <ListScore originData={data} />
+      <ListScore originData={data} courseId={profile?.khoa_hoc} />
     </div>
   );
 };

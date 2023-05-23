@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import vkuApi from "../../components/Api/vkuApi";
 import { useCookies } from "react-cookie";
 import Title from "antd/es/typography/Title";
+import { FormOutlined } from "@ant-design/icons";
 
 function ScoreManagement() {
   const [cookies] = useCookies();
@@ -79,7 +80,7 @@ function ScoreManagement() {
       render: (_, record) => (
         <Space>
           <Link to={`nhap-diem/${record.ma_lop_tc}/${record.nhom}`}>
-            <Button type="text" className="btn">
+            <Button type="text" className="btn" icon={<FormOutlined />}>
               Nhập điểm
             </Button>
           </Link>

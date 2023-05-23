@@ -9,8 +9,13 @@ import StudentInfo from "../pages/Student/StudentInfo";
 import Score from "../pages/Student/Score";
 import StudentAttendance from "../pages/StudentAttendance";
 import ProjectClass from "../pages/Student/ProjectClass";
+import EntrypointProject from "../pages/EntryPointProject";
 
 export const routes = [
+  {
+    path: "/huong-dan-do-an/nhap-diem/:id/:group",
+    component: EntrypointProject,
+  },
   {
     path: "/quan-ly-diem/nhap-diem/:id/:group",
     component: EntryPoint,
