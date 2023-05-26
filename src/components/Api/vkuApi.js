@@ -29,6 +29,10 @@ const vkuApi = {
     const path = `getStudentsByClassId.php`;
     return axiosClient.get(path, params);
   },
+  getStudentsByProjectClassId: (params) => {
+    const path = `getStudentsByProjectClassId.php`;
+    return axiosClient.get(path, params);
+  },
   updateScore: (params) => {
     const path = `updateScore.php`;
     return axiosClient.get(path, params);
@@ -43,6 +47,38 @@ const vkuApi = {
   },
   getSchoolYears: (params) => {
     const path = `getAllSchoolYearByCourseId.php`;
+    return axiosClient.get(path, params);
+  },
+  getAllCreditClassByParams: (params) => {
+    const path = `getAllCreditClassByParams.php`;
+    return axiosClient.get(path, params);
+  },
+  getAllProjectClass: (params) => {
+    const path = `getAllProjectClass.php`;
+    return axiosClient.get(path, params);
+  },
+  getAllHPRegistry: (params) => {
+    const path = `getAllHPRegistry.php`;
+    return axiosClient.get(path, params);
+  },
+  getAllStudentRegistry: (params) => {
+    const path = `getAllStudentRegistry.php`;
+    return axiosClient.get(path, params);
+  },
+  getStudentRegistryById: (params) => {
+    const path = `getStudentRegistryById.php`;
+    return axiosClient.get(path, params);
+  },
+  createSubjectRegistry: (params) => {
+    const path = `createSubjectRegistry.php`;
+    return axiosClient.get(path, params);
+  },
+  updateRegistry: (params) => {
+    const path = `updateRegistry.php`;
+    return axiosClient.get(path, params);
+  },
+  deleteRegistry: (params) => {
+    const path = `deleteRegistry.php`;
     return axiosClient.get(path, params);
   },
 };

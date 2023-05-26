@@ -14,10 +14,7 @@ const ListScore = (props) => {
   const [current, setCurrent] = useState("0");
 
   const handleExpand = (expanded, record) => {
-    const tmp = data.filter(
-      (item) =>
-        item?.nam_hoc === record?.nam_hoc && item?.hoc_ky === record?.hoc_ky
-    );
+    const tmp = data.filter((item) => item?.nam_hoc === record?.id);
 
     setFilteredData(tmp);
     setCurrent(record.id);
@@ -111,7 +108,6 @@ const ListScore = (props) => {
       title: "Điểm chữ",
       width: 120,
       align: "center",
-      fixed: "right",
     },
   ];
 
@@ -135,6 +131,7 @@ const ListScore = (props) => {
         title: "Tên môn học",
         dataIndex: "ma_mh",
         render: (_, record) => `${record?.ten_mh} (${record?.nhom})`,
+        rowSpan: 6,
       },
       {
         title: "Số tín chỉ",
@@ -216,6 +213,7 @@ const ListScore = (props) => {
 
   return (
     <Table
+      rowClassName="tbl-row-cs"
       dataSource={schoolYears}
       columns={columns}
       rowKey="id"
@@ -223,12 +221,9 @@ const ListScore = (props) => {
         expandedRowRender,
         onExpand: handleExpand,
         expandedRowKeys: [current],
+        expandRowByClick: true,
       }}
-      pagination={{
-        defaultPageSize: 50,
-        showSizeChanger: true,
-        pageSizeOptions: [50, 100, 150],
-      }}
+      pagination={false}
       scroll={{
         x: 1200,
       }}

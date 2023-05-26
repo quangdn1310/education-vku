@@ -20,11 +20,7 @@ function Entrypoint() {
       };
       const res = await vkuApi.getStudentsByClassId({ params });
       if (res) {
-        const newData = res.map((item) => ({
-          ma_lop_tc: id,
-          ...item,
-        }));
-        setStudents(newData);
+        setStudents(res);
       }
     };
     getStudents();
@@ -50,8 +46,8 @@ function Entrypoint() {
   const handleUpdateScore = () => {
     setIsLoading(true);
     if (newStudents.length > 0) {
-      newStudents?.forEach((item, i) => {
-        onUpdateScore(item, i);
+      newStudents?.forEach((data, i) => {
+        onUpdateScore(data, i);
       });
     } else {
       notification.info({

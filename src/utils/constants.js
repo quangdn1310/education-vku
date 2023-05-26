@@ -39,9 +39,9 @@ export const MENU_ITEMS = [
     label: <Link to="/huong-dan-do-an">Hướng dẫn đồ án</Link>,
   },
   {
-    key: "5",
+    key: "/xac-nhan-sinh-vien",
     icon: <img src={HocPhan} alt="" width={20} />,
-    label: "Lớp học phần",
+    label: <Link to="/xac-nhan-sinh-vien">Xác nhận sinh viên</Link>,
   },
 ];
 
@@ -67,8 +67,8 @@ export const STUDENT_MENU_ITEMS = [
     label: <Link to="/ket-qua-hoc-tap">Kết quả học tập</Link>,
   },
   {
-    key: "/hoc-phi",
+    key: "/dang-ky-tin-chi",
     icon: <img src={HocPhi} alt="" width={20} />,
-    label: <Link to="/hoc-phi">Học phí</Link>,
+    label: <Link to="/dang-ky-tin-chi">Đăng kí tín chỉ</Link>,
   },
 ];

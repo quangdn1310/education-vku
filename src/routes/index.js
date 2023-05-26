@@ -10,6 +10,8 @@ import Score from "../pages/Student/Score";
 import StudentAttendance from "../pages/StudentAttendance";
 import ProjectClass from "../pages/Student/ProjectClass";
 import EntrypointProject from "../pages/EntryPointProject";
+import CreditRegistry from "../pages/Student/CreditRegistry";
+import StudentConfirm from "../pages/StudentConfirm";
 
 export const routes = [
   {
@@ -43,6 +45,10 @@ export const routes = [
     component: ProjectGuide,
   },
   {
+    path: "/xac-nhan-sinh-vien",
+    component: StudentConfirm,
+  },
+  {
     path: "/",
     exact: true,
     component: TeacherInfo,
@@ -66,6 +72,10 @@ export const studentRoutes = [
   {
     path: "/ket-qua-hoc-tap",
     component: Score,
+  },
+  {
+    path: "/dang-ky-tin-chi",
+    component: CreditRegistry,
   },
   {
     path: "/",

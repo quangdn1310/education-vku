@@ -17,13 +17,9 @@ function EntrypointProject() {
         ma_lop_tc: id,
         nhom: group,
       };
-      const res = await vkuApi.getStudentsByClassId({ params });
+      const res = await vkuApi.getStudentsByProjectClassId({ params });
       if (res) {
-        const newData = res.map((item) => ({
-          ma_lop_tc: id,
-          ...item,
-        }));
-        setStudents(newData);
+        setStudents(res);
       }
     };
     getStudents();

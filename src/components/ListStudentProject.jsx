@@ -89,12 +89,12 @@ const ListStudentProject = (props) => {
       }
 
       const dataUpdate = newData.map((item) => {
-        const { ma_sv, ma_lop_tc, nhom, diem_cc, diem_ck } = item;
+        const { ma_sv, ma_lop_tc, nhom, diem_cc, diem_bv } = item;
         return {
           ma_sv,
           ma_lop_tc,
           diem_cc,
-          diem_ck,
+          diem_bv,
           nhom,
         };
       });
@@ -133,7 +133,7 @@ const ListStudentProject = (props) => {
 
     {
       title: "Điểm BV",
-      dataIndex: "diem_ck",
+      dataIndex: "diem_bv",
       width: 120,
       align: "center",
       editable: true,
@@ -143,14 +143,14 @@ const ListStudentProject = (props) => {
       width: 120,
       align: "center",
       render: (_, record) =>
-        scoreToAlp(record?.diem_cc * 0.2 + record?.diem_ck * 0.8),
+        scoreToAlp(record?.diem_cc * 0.2 + record?.diem_bv * 0.8),
     },
     {
       title: "Điểm số",
       width: 120,
       align: "center",
       render: (_, record) =>
-        (record?.diem_cc * 0.2 + record?.diem_ck * 0.8).toFixed(1),
+        (record?.diem_cc * 0.2 + record?.diem_bv * 0.8).toFixed(1),
     },
     {
       title: "Quản lý",

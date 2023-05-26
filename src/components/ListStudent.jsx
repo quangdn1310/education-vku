@@ -26,7 +26,7 @@ const EditableCell = ({
           rules={[
             {
               required: true,
-              message: `Vui lòng nhập ${title}!`,
+              message: `Nhập ${title}!`,
             },
           ]}
         >
@@ -89,14 +89,12 @@ const ListStudent = (props) => {
       }
 
       const dataUpdate = newData.map((item) => {
-        const { ma_sv, ma_lop_tc, diem_cc, diem_gk, diem_ck, nhom } = item;
+        const { id, diem_cc, diem_gk, diem_ck } = item;
         return {
-          ma_sv,
-          ma_lop_tc,
+          id,
           diem_cc,
           diem_gk,
           diem_ck,
-          nhom,
         };
       });
 
@@ -230,7 +228,7 @@ const ListStudent = (props) => {
           onChange: cancel,
         }}
         scroll={{
-          x: 1200,
+          x: 1100,
         }}
       />
     </Form>
