@@ -1,4 +1,4 @@
-import { Modal, Table } from "antd";
+import { Button, Modal, Table } from "antd";
 import React, { useEffect, useState } from "react";
 
 const MutationConfirm = ({ isOpen, onOk, onCancel, classId, group, data }) => {
@@ -49,6 +49,11 @@ const MutationConfirm = ({ isOpen, onOk, onCancel, classId, group, data }) => {
       onCancel={onCancel}
       maskClosable={false}
       width={1000}
+      footer={[
+        <Button type="primary" className="btn" key="back" onClick={onCancel}>
+          Đóng
+        </Button>,
+      ]}
     >
       <Table
         rowKey="ma_sv"

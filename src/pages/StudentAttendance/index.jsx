@@ -1,15 +1,17 @@
-import { Button, Select, Space, Table, Typography } from "antd";
+import { Button, Select, Space, Table, Typography, notification } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import vkuApi from "../../components/Api/vkuApi";
+import ListStudentAttendance from "../../components/ListStudentAttendance";
 
 const { Title, Text } = Typography;
 const StudentAttendance = () => {
   const { id, group } = useParams();
   const [students, setStudents] = useState([]);
+  const [newStudentList, setNewStudentList] = useState([]);
 
   useEffect(() => {
     const getStudents = async () => {
@@ -21,7 +23,9 @@ const StudentAttendance = () => {
       if (res) {
         const newData = res.map((item) => ({
           ma_lop_tc: id,
-          ...item,
+          nhom: +group,
+          ma_sv: item.ma_sv,
+          ho_ten: item.ho_ten,
         }));
 
         setStudents(newData);
@@ -29,66 +33,6 @@ const StudentAttendance = () => {
     };
     getStudents();
   }, [id, group]);
-  const columns = [
-    {
-      title: "STT",
-      dataIndex: "stt",
-      width: 70,
-      align: "center",
-      render: (_, record, i) => i + 1,
-    },
-    {
-      title: "Mã sinh viên",
-      dataIndex: "ma_sv",
-      width: 140,
-      align: "center",
-    },
-
-    {
-      title: "Tên sinh viên",
-      dataIndex: "ho_ten",
-    },
-
-    {
-      title: "Điểm danh",
-      width: 180,
-      align: "center",
-      render: (_, record) => (
-        <Select
-          defaultValue={"1"}
-          style={{
-            width: 150,
-          }}
-          options={[
-            {
-              value: "1",
-              label: "Có mặt",
-            },
-            {
-              value: "2",
-              label: "Vắng phép",
-            },
-            {
-              value: "0",
-              label: "Vắng không phép",
-            },
-          ]}
-        />
-      ),
-    },
-    {
-      title: "Ghi chú",
-      dataIndex: "reason",
-      width: 180,
-      render: () => <TextArea rows={2} />,
-    },
-    {
-      title: "Vắng",
-      width: 80,
-      align: "center",
-      render: () => 0,
-    },
-  ];
 
   const useStyles = {
     titleStyles: {
@@ -97,27 +41,80 @@ const StudentAttendance = () => {
       textTransform: "uppercase",
     },
   };
+
+  const handleUpdate = (data) => {
+    if (data?.length > 0) {
+      const newData = data.map((item) => ({
+        ma_sv: item.ma_sv,
+        ma_lop_tc: item.ma_lop_tc,
+        nhom: item.nhom,
+        attendance_status_id: item.attendance_status_id,
+        ngay_hoc: new Date().toJSON().slice(0, 10),
+        note: item.note,
+      }));
+
+      setNewStudentList(newData);
+    }
+  };
+
+  const onUpdateAttendance = async (params, i) => {
+    if (newStudentList.length - 1 === i) {
+      await vkuApi.createStudentAttendance({ params });
+      notification.success({
+        message: "Điểm danh thành công!",
+      });
+      // setIsLoading(false);
+      setNewStudentList([]);
+    } else {
+      await vkuApi.createStudentAttendance({ params });
+    }
+  };
+
+  const handleAttendance = () => {
+    if (newStudentList?.length > 0) {
+      // setIsLoading(true);
+      try {
+        newStudentList?.forEach((item, i) => {
+          onUpdateAttendance(item, i);
+        });
+      } catch (error) {
+        // setIsLoading(false)
+        console.log("error::", error);
+      }
+    } else {
+      notification.info({
+        message: "Không có thay đổi nào!",
+      });
+    }
+  };
+
   return (
     <div className="page-content">
-      <Title level={4} style={useStyles.titleStyles}>
-        Điểm danh hôm nay (ngày 6/5/2023)
-      </Title>
-      <Table columns={columns} dataSource={students} pagination={false} />
-      <Space
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Space>
-          <Text strong>Có mặt: 12</Text>
-          <Text strong>Vắng phép: 0</Text>
-          <Text strong>Vắng không phép: 0</Text>
+      <Space style={{ width: "100%" }} direction="vertical">
+        <Title level={4} style={useStyles.titleStyles}>
+          Điểm danh hôm nay (ngày{" "}
+          {`${new Date().getDate()}/${
+            new Date().getMonth() + 1
+          }/${new Date().getFullYear()}`}
+          )
+        </Title>
+        <ListStudentAttendance
+          originData={students}
+          onUpdate={handleUpdate}
+          maLopTc={id}
+          group={group}
+        />
+        <Space
+          style={{
+            width: "100%",
+          }}
+          direction="vertical"
+          align="end"
+        >
+          <Button type="primary" className="btn" onClick={handleAttendance}>
+            Điểm danh
+          </Button>
         </Space>
-        <Button type="primary" className="btn">
-          Điểm danh
-        </Button>
       </Space>
     </div>
   );

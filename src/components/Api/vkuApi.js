@@ -37,6 +37,10 @@ const vkuApi = {
     const path = `updateScore.php`;
     return axiosClient.get(path, params);
   },
+  updateScoreProject: (params) => {
+    const path = `updateScoreProject.php`;
+    return axiosClient.get(path, params);
+  },
   getStudent: (params) => {
     const path = `getStudent.php`;
     return axiosClient.get(path, params);
@@ -79,6 +83,18 @@ const vkuApi = {
   },
   deleteRegistry: (params) => {
     const path = `deleteRegistry.php`;
+    return axiosClient.get(path, params);
+  },
+  getStudentAttendance: (params) => {
+    const path = `getStudentAttendance.php`;
+    return axiosClient.get(path, params);
+  },
+  createStudentAttendance: (params) => {
+    const path = `createStudentAttendance.php`;
+    return axiosClient.get(path, params);
+  },
+  countStudentAttendance: (params) => {
+    const path = `countStudentAttendance.php`;
     return axiosClient.get(path, params);
   },
 };

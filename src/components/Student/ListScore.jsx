@@ -213,7 +213,7 @@ const ListScore = (props) => {
 
   return (
     <Table
-      rowClassName="tbl-row-cs"
+      // rowClassName="tbl-row-cs"
       dataSource={schoolYears}
       columns={columns}
       rowKey="id"

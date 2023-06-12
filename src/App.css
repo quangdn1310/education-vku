@@ -156,3 +156,27 @@ body {
 .anticon-close {
   color: #b71e1e !important;
 }
+
+.select-attendance-0 .ant-select-selector {
+  background-color: #b71e1e !important;
+  color: #fff;
+}
+.select-attendance-1 .ant-select-selector {
+  background-color: #16a085 !important;
+  color: #fff;
+}
+.select-attendance-2 .ant-select-selector {
+  background-color: #34495e !important;
+  color: #fff;
+}
+
+.select-attendance-0 .ant-select-selection-item,
+.select-attendance-1 .ant-select-selection-item,
+.select-attendance-2 .ant-select-selection-item {
+  color: #fff !important;
+}
+.select-attendance-0 .ant-select-arrow,
+.select-attendance-1 .ant-select-arrow,
+.select-attendance-2 .ant-select-arrow {
+  color: #fff !important;
+}

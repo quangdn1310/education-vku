@@ -27,14 +27,14 @@ function EntrypointProject() {
 
   const onUpdateScore = async (params, i) => {
     if (newStudents.length - 1 === i) {
-      await vkuApi.updateScore({ params });
+      await vkuApi.updateScoreProject({ params });
       notification.success({
         message: "Cập nhật điểm thành công!",
       });
       setIsLoading(false);
       setNewStudents([]);
     } else {
-      await vkuApi.updateScore({ params });
+      await vkuApi.updateScoreProject({ params });
     }
   };
 
