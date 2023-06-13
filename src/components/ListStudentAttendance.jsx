@@ -120,42 +120,17 @@ const EditableCell = ({
   return <td {...restProps}>{childNode}</td>;
 };
 const ListStudentAttendance = (props) => {
-  const { originData, onUpdate, maLopTc, group } = props;
+  const {
+    originData,
+    onUpdate,
+    loading,
+    studentAttendanceList,
+    attendanceStatusList,
+  } = props;
   const [dataSource, setDataSource] = useState([]);
-  const [studentAttendanceList, setStudentAttendanceList] = useState([]);
-  const [attendanceStatusList, setAttendanceStatusList] = useState([]);
   const [countAbsence, setCountAbsence] = useState(0);
   const [countPresent, setCountPresent] = useState(0);
   const [countUnexcusedAbsence, setCountUnexcusedAbsence] = useState(0);
-
-  useEffect(() => {
-    const getStudentAttendance = async () => {
-      const params = {
-        ma_lop_tc: maLopTc,
-        nhom: group,
-        ngay_hoc: new Date().toJSON().slice(0, 10),
-      };
-      const res = await vkuApi.getStudentAttendance({ params });
-      if (res) {
-        setStudentAttendanceList(res);
-      }
-    };
-    getStudentAttendance();
-  }, [maLopTc, group]);
-
-  useEffect(() => {
-    const countStudentAttendance = async () => {
-      const params = {
-        ma_lop_tc: maLopTc,
-        nhom: group,
-      };
-      const res = await vkuApi.countStudentAttendance({ params });
-      if (res) {
-        setAttendanceStatusList(res);
-      }
-    };
-    countStudentAttendance();
-  }, [maLopTc, group]);
 
   useEffect(() => {
     if (originData?.length > 0) {
@@ -315,6 +290,7 @@ const ListStudentAttendance = (props) => {
   return (
     <div>
       <Table
+        loading={loading}
         components={components}
         rowClassName={() => "editable-row"}
         dataSource={dataSource}

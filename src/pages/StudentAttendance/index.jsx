@@ -1,5 +1,4 @@
-import { Button, Select, Space, Table, Typography, notification } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import { Button, Space, Typography, notification } from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -7,32 +6,72 @@ import { useParams } from "react-router-dom";
 import vkuApi from "../../components/Api/vkuApi";
 import ListStudentAttendance from "../../components/ListStudentAttendance";
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 const StudentAttendance = () => {
   const { id, group } = useParams();
   const [students, setStudents] = useState([]);
   const [newStudentList, setNewStudentList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [reload, setReload] = useState(false);
+  const [studentAttendanceList, setStudentAttendanceList] = useState([]);
+  const [attendanceStatusList, setAttendanceStatusList] = useState([]);
 
   useEffect(() => {
     const getStudents = async () => {
-      const params = {
-        ma_lop_tc: id,
-        nhom: group,
-      };
-      const res = await vkuApi.getStudentsByClassId({ params });
-      if (res) {
-        const newData = res.map((item) => ({
+      setIsLoading(true);
+      try {
+        const params = {
           ma_lop_tc: id,
-          nhom: +group,
-          ma_sv: item.ma_sv,
-          ho_ten: item.ho_ten,
-        }));
+          nhom: group,
+        };
+        const res = await vkuApi.getStudentsByClassId({ params });
+        if (res) {
+          const newData = res.map((item) => ({
+            ma_lop_tc: id,
+            nhom: +group,
+            ma_sv: item.ma_sv,
+            ho_ten: item.ho_ten,
+          }));
 
-        setStudents(newData);
+          setStudents(newData);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log("error::", error);
       }
     };
     getStudents();
   }, [id, group]);
+
+  useEffect(() => {
+    const getStudentAttendance = async () => {
+      const params = {
+        ma_lop_tc: id,
+        nhom: group,
+        ngay_hoc: new Date().toJSON().slice(0, 10),
+      };
+      const res = await vkuApi.getStudentAttendance({ params });
+      if (res) {
+        setStudentAttendanceList(res);
+      }
+    };
+    getStudentAttendance();
+  }, [id, group, reload]);
+
+  useEffect(() => {
+    const countStudentAttendance = async () => {
+      const params = {
+        ma_lop_tc: id,
+        nhom: group,
+      };
+      const res = await vkuApi.countStudentAttendance({ params });
+      if (res) {
+        setAttendanceStatusList(res);
+      }
+    };
+    countStudentAttendance();
+  }, [id, group, reload]);
 
   const useStyles = {
     titleStyles: {
@@ -63,7 +102,9 @@ const StudentAttendance = () => {
       notification.success({
         message: "Điểm danh thành công!",
       });
+
       // setIsLoading(false);
+      setReload(!reload);
       setNewStudentList([]);
     } else {
       await vkuApi.createStudentAttendance({ params });
@@ -99,10 +140,11 @@ const StudentAttendance = () => {
           )
         </Title>
         <ListStudentAttendance
+          loading={isLoading}
           originData={students}
           onUpdate={handleUpdate}
-          maLopTc={id}
-          group={group}
+          studentAttendanceList={studentAttendanceList}
+          attendanceStatusList={attendanceStatusList}
         />
         <Space
           style={{

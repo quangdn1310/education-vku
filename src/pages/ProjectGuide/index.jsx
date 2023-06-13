@@ -14,16 +14,24 @@ const ProjectGuide = () => {
   const { profile } = cookies;
 
   const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getTkbDoAn = async () => {
-      const params = {
-        ma_gv: profile?.ma_gv,
-      };
-      let response = await vkuApi.getTkbDoAn({ params });
+      setIsLoading(true);
+      try {
+        const params = {
+          ma_gv: profile?.ma_gv,
+        };
+        let response = await vkuApi.getTkbDoAn({ params });
 
-      if (response) {
-        setData(response);
+        if (response) {
+          setData(response);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log("error::", error);
       }
     };
 
@@ -74,6 +82,7 @@ const ProjectGuide = () => {
     <div className="page-content">
       <Card title={`Danh sách hướng dẫn lớp đồ án`}>
         <Table
+          loading={isLoading}
           columns={columns}
           dataSource={data}
           rowKey="ma_lop_tc"

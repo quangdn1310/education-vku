@@ -11,16 +11,24 @@ const Score = () => {
   const { profile } = cookies;
 
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getScore = async () => {
-      const params = {
-        ma_sv: profile?.ma_sv,
-      };
-      let response = await vkuApi.getScore({ params });
+      setIsLoading(true);
+      try {
+        const params = {
+          ma_sv: profile?.ma_sv,
+        };
+        let response = await vkuApi.getScore({ params });
 
-      if (response) {
-        setData(response);
+        if (response) {
+          setData(response);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log("error::", error);
       }
     };
 
@@ -39,7 +47,11 @@ const Score = () => {
       <Title level={4} style={useStyles.titleStyles}>
         Kết quả học tập
       </Title>
-      <ListScore originData={data} courseId={profile?.khoa_hoc} />
+      <ListScore
+        isLoading={isLoading}
+        originData={data}
+        courseId={profile?.khoa_hoc}
+      />
     </div>
   );
 };

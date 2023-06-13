@@ -3,28 +3,36 @@ import { useParams } from "react-router-dom";
 import vkuApi from "../../components/Api/vkuApi";
 import ListStudent from "../../components/ListStudent";
 import { Button, Space, notification } from "antd";
-import _ from "lodash";
 import Title from "antd/es/typography/Title";
 
 function Entrypoint() {
   const { id, group } = useParams();
   const [students, setStudents] = useState([]);
   const [newStudents, setNewStudents] = useState([]);
+  const [isLoadingList, setIsLoadingList] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const getStudents = async () => {
-      const params = {
-        ma_lop_tc: id,
-        nhom: group,
-      };
-      const res = await vkuApi.getStudentsByClassId({ params });
-      if (res) {
-        setStudents(res);
+      setIsLoadingList(true);
+      try {
+        const params = {
+          ma_lop_tc: id,
+          nhom: group,
+        };
+        const res = await vkuApi.getStudentsByClassId({ params });
+        if (res) {
+          setStudents(res);
+        }
+        setIsLoadingList(false);
+      } catch (error) {
+        setIsLoadingList(false);
+        console.log("error::", error);
       }
     };
     getStudents();
-  }, [id, group]);
+  }, [id, group, reload]);
 
   const onUpdateScore = async (params, i) => {
     if (newStudents.length - 1 === i) {
@@ -32,6 +40,7 @@ function Entrypoint() {
       notification.success({
         message: "Cập nhật điểm thành công!",
       });
+      setReload(!reload);
       setIsLoading(false);
       setNewStudents([]);
     } else {
@@ -71,7 +80,11 @@ function Entrypoint() {
         <Title level={4} style={useStyles.titleStyles}>
           Nhập điểm
         </Title>
-        <ListStudent originData={students} onUpdate={updateStudentList} />
+        <ListStudent
+          originData={students}
+          onUpdate={updateStudentList}
+          loading={isLoadingList}
+        />
 
         <Space direction="vertical" className="w-full" align="end">
           <Button

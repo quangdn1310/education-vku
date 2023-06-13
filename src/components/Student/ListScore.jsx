@@ -6,7 +6,7 @@ import vkuApi from "../Api/vkuApi";
 const { Text } = Typography;
 
 const ListScore = (props) => {
-  const { originData, courseId } = props;
+  const { originData, courseId, isLoading } = props;
 
   const [data, setData] = useState([]);
   const [schoolYears, setSchoolYears] = useState([]);
@@ -214,6 +214,7 @@ const ListScore = (props) => {
   return (
     <Table
       // rowClassName="tbl-row-cs"
+      loading={isLoading}
       dataSource={schoolYears}
       columns={columns}
       rowKey="id"

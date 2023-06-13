@@ -39,7 +39,7 @@ const EditableCell = ({
   );
 };
 const ListStudent = (props) => {
-  const { originData, onUpdate } = props;
+  const { originData, onUpdate, loading } = props;
 
   const [form] = Form.useForm();
   const [data, setData] = useState([]);
@@ -216,6 +216,7 @@ const ListStudent = (props) => {
   return (
     <Form form={form} component={false}>
       <Table
+        loading={loading}
         components={{
           body: {
             cell: EditableCell,

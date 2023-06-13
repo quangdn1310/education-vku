@@ -5,7 +5,7 @@ import MutationConfirm from "./MutationConfirm";
 import { EyeOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 
-const ListCredit = ({ data, studentRegistryList, onConfirm }) => {
+const ListCredit = ({ data, studentRegistryList, onConfirm, isLoading }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [classId, setClassId] = useState();
   const [group, setGroup] = useState();
@@ -133,7 +133,12 @@ const ListCredit = ({ data, studentRegistryList, onConfirm }) => {
       <Title level={4} style={useStyles.titleStyles}>
         Danh sách các lớp học phần
       </Title>
-      <Table columns={columns} dataSource={newData} scroll={{ x: 1000 }} />
+      <Table
+        loading={isLoading}
+        columns={columns}
+        dataSource={newData}
+        scroll={{ x: 1000 }}
+      />
       <MutationConfirm
         isOpen={isModalOpen}
         onCancel={handleCancel}

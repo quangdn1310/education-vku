@@ -10,16 +10,24 @@ function Schedule() {
   const { profile } = cookies;
 
   const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getTkb = async () => {
-      const params = {
-        ma_sv: profile?.ma_sv,
-      };
-      let response = await vkuApi.getTkbSinhVien({ params });
+      setIsLoading(true);
+      try {
+        const params = {
+          ma_sv: profile?.ma_sv,
+        };
+        let response = await vkuApi.getTkbSinhVien({ params });
 
-      if (response) {
-        setData(response);
+        if (response) {
+          setData(response);
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log("error::", error);
       }
     };
 
@@ -102,6 +110,7 @@ function Schedule() {
         Thời khóa biểu
       </Title>
       <Table
+        loading={isLoading}
         columns={columns}
         dataSource={data}
         pagination={{
